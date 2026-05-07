@@ -4,13 +4,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from web.pages.base_page import BasePage
 
 class InventoryPage(BasePage):
-    TITLE = (By.CLASS_NAME, "title")
+    TITLE = (By.CSS_SELECTOR, ".title")
     ADD_TO_CART_BUTTONS = (By.CSS_SELECTOR, "[data-test^='add-to-cart']")
     CART_BADGE = (By.CLASS_NAME, "shopping_cart_badge")
     CART_LINK = (By.CLASS_NAME, "shopping_cart_link")
+    INVENTORY_CONTAINER = (By.ID, "inventory_container")
 
     def wait_to_load(self):
-        self.wait.until(EC.visibility_of_element_located(self.TITLE))
+        self.wait.until(EC.visibility_of_element_located(self.INVENTORY_CONTAINER))
         return self
 
     def add_items_to_cart(self, quantity=2):
