@@ -16,20 +16,9 @@ class InventoryPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self.INVENTORY_CONTAINER))
         return self
 
-    def add_items_to_cart(self, quantity=2):
+   def add_items_to_cart(self, quantity=2):
         self.wait_to_load()
-        for _ in range(quantity):
-            buttons = self.driver.find_elements(*self.ADD_TO_CART_BUTTONS)
-            buttons[0].click()
+        buttons = self.driver.find_elements(*self.ADD_TO_CART_BUTTONS)
+        for i in range(min(quantity, len(buttons))):
+            buttons[i].click()
         return self
-
-    def go_to_cart(self):
-        self.click(self.CART_LINK)
-        return self
-
-    def get_cart_count(self):
-        return int(self.get_text(self.CART_BADGE))
-
-    def get_title(self):
-        self.wait_to_load()
-        return self.get_text(self.TITLE)
