@@ -42,23 +42,23 @@ class TestLoginPage:
 
 class TestInventory:
     def test_inventory_title(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         assert InventoryPage(driver).get_title() == "Products"
 
     def test_add_one_item_to_cart(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=1)
         assert inventory_page.get_cart_count() == 1
 
     def test_cart_badge_updates(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=1)
         assert inventory_page.get_cart_count() >= 1
 
     def test_go_to_cart(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=1)
         inventory_page.go_to_cart()
@@ -67,24 +67,24 @@ class TestInventory:
 
 class TestCheckoutFlow:
     def test_login_navigates_to_inventory(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         assert InventoryPage(driver).get_title() == "Products"
 
     def test_add_products_to_cart(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=2)
         assert inventory_page.get_cart_count() == 2
 
     def test_cart_contains_added_items(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=2)
         inventory_page.go_to_cart()
         assert CartPage(driver).get_item_count() == 2
 
     def test_checkout_step_one_fills_info(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=2)
         inventory_page.go_to_cart()
@@ -93,7 +93,7 @@ class TestCheckoutFlow:
         assert CheckoutStepTwoPage(driver).get_item_count() == 2
 
     def test_order_summary_shows_total(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=2)
         inventory_page.go_to_cart()
@@ -102,7 +102,7 @@ class TestCheckoutFlow:
         assert "Total:" in CheckoutStepTwoPage(driver).get_total()
 
     def test_finish_order_shows_confirmation(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=2)
         inventory_page.go_to_cart()
@@ -112,7 +112,7 @@ class TestCheckoutFlow:
         assert CheckoutCompletePage(driver).get_confirmation_message() == "Thank you for your order!"
 
     def test_back_to_products_after_order(self, driver):
-        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        LoginPage(driver).open().login_and_wait(VALID_USER, PASSWORD)
         inventory_page = InventoryPage(driver)
         inventory_page.add_items_to_cart(quantity=2)
         inventory_page.go_to_cart()
