@@ -22,13 +22,6 @@ class InventoryPage(BasePage):
         for i in range(min(quantity, len(buttons))):
             buttons[i].click()
         return self
-        def go_to_cart(self):
+    def go_to_cart(self):
         self.click(self.CART_LINK)
         return self
-
-    def get_cart_count(self):
-        return int(self.get_text(self.CART_BADGE))
-
-    def get_title(self):
-        self.wait_to_load()
-        return self.get_text(self.TITLE)
