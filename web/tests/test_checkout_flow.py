@@ -1,4 +1,5 @@
-import pytest
+python3 - << 'PYEOF'
+content = '''import pytest
 from web.pages.login_page import LoginPage
 from web.pages.inventory_page import InventoryPage
 from web.pages.cart_page import CartPage
@@ -89,3 +90,9 @@ class TestCheckoutFlow:
     def test_back_to_products_after_order(self, driver):
         CheckoutCompletePage(driver).back_to_products()
         assert InventoryPage(driver).get_title() == "Products"
+'''
+
+with open("web/tests/test_checkout_flow.py", "w") as f:
+    f.write(content)
+print("OK")
+PYEOF
