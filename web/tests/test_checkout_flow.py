@@ -12,6 +12,7 @@ VALID_USER = "standard_user"
 LOCKED_USER = "locked_out_user"
 PASSWORD = "secret_sauce"
 
+
 class TestLoginPage:
     def test_login_with_invalid_credentials(self, driver):
         login_page = LoginPage(driver).open()
@@ -22,6 +23,42 @@ class TestLoginPage:
         login_page = LoginPage(driver).open()
         login_page.login(LOCKED_USER, PASSWORD)
         assert "locked out" in login_page.get_error_message().lower()
+
+    def test_login_empty_credentials(self, driver):
+        login_page = LoginPage(driver).open()
+        login_page.login("", "")
+        assert "Username is required" in login_page.get_error_message()
+
+    def test_login_empty_password(self, driver):
+        login_page = LoginPage(driver).open()
+        login_page.login(VALID_USER, "")
+        assert "Password is required" in login_page.get_error_message()
+
+    def test_login_valid_user(self, driver):
+        login_page = LoginPage(driver).open()
+        login_page.login(VALID_USER, PASSWORD)
+        assert InventoryPage(driver).get_title() == "Products"
+
+
+class TestInventory:
+    def test_inventory_title(self, driver):
+        LoginPage(driver).open().login(VALID_USER, PASSWORD)
+        assert InventoryPage(driver).get_title() == "Products"
+
+    def test_add_one_item_to_cart(self, driver):
+        inventory_page = InventoryPage(driver)
+        inventory_page.add_items_to_cart(quantity=1)
+        assert inventory_page.get_cart_count() == 1
+
+    def test_cart_badge_updates(self, driver):
+        inventory_page = InventoryPage(driver)
+        inventory_page.add_items_to_cart(quantity=1)
+        assert inventory_page.get_cart_count() >= 1
+
+    def test_go_to_cart(self, driver):
+        InventoryPage(driver).go_to_cart()
+        assert CartPage(driver).get_item_count() >= 1
+
 
 class TestCheckoutFlow:
     def test_login_navigates_to_inventory(self, driver):
