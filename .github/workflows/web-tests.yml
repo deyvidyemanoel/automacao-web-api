@@ -23,7 +23,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Web E2E tests
-        run: pytest web/tests/ -v --tb=short --alluredir=reports/allure-results
+        run: pytest web/tests/ api/tests/ -v --tb=short --alluredir=reports/allure-results
         continue-on-error: true
 
       - name: Generate Allure report
