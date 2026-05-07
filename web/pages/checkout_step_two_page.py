@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from web.pages.base_page import BasePage
 
 
@@ -11,6 +12,10 @@ class CheckoutStepTwoPage(BasePage):
         return self.get_text(self.TOTAL_LABEL)
 
     def get_item_count(self):
+        try:
+            self.wait.until(EC.presence_of_element_located(self.SUMMARY_ITEMS))
+        except Exception:
+            pass
         return len(self.driver.find_elements(*self.SUMMARY_ITEMS))
 
     def finish_order(self):

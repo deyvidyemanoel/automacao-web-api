@@ -141,3 +141,6 @@ Os relatórios JUnit XML são publicados como artefatos de cada execução.
 | Web Tests (local) | `reports/web-results.xml` |
 | GitHub Actions — API | *(adicionar screenshot da aba Actions)* |
 | GitHub Actions — Web | *(adicionar screenshot da aba Actions)* |
+## Resultado dos Testes
+
+![Testes passando](assets/tests-passed.png)
