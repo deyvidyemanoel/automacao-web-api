@@ -1,4 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from web.pages.base_page import BasePage
 
 class InventoryPage(BasePage):
@@ -7,7 +9,12 @@ class InventoryPage(BasePage):
     CART_BADGE = (By.CLASS_NAME, "shopping_cart_badge")
     CART_LINK = (By.CLASS_NAME, "shopping_cart_link")
 
+    def wait_to_load(self):
+        self.wait.until(EC.visibility_of_element_located(self.TITLE))
+        return self
+
     def add_items_to_cart(self, quantity=2):
+        self.wait_to_load()
         for _ in range(quantity):
             buttons = self.driver.find_elements(*self.ADD_TO_CART_BUTTONS)
             buttons[0].click()
@@ -21,4 +28,5 @@ class InventoryPage(BasePage):
         return int(self.get_text(self.CART_BADGE))
 
     def get_title(self):
+        self.wait_to_load()
         return self.get_text(self.TITLE)
