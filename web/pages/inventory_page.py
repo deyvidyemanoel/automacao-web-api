@@ -3,6 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from web.pages.base_page import BasePage
 
+URL = "https://www.saucedemo.com/inventory.html"
+
 class InventoryPage(BasePage):
     TITLE = (By.CSS_SELECTOR, ".title")
     ADD_TO_CART_BUTTONS = (By.CSS_SELECTOR, "[data-test^='add-to-cart']")
